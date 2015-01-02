@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # utdep.pl - Check the dependencies of an Unreal Tournament (UT99) file.
-# Version: 0.3.0
+# Version: 0.3.1
 
 use strict;
 use warnings;
