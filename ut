@@ -82,8 +82,24 @@ create_prefpath System
 if [ -x "${UT_DATA_PATH}/ut-bin" ]
 then
 	cd "${UT_DATA_PATH}/"
-
-	exec "./ut-bin" -log $*
+	URL=$(basename $1);
+	# use perl to change SUB to get the type
+	TYPE=`perl -e "'$URL' =~ m/^[^\-]+-/; print uc($&)"`;
+	echo "Type: $TYPE\n";
+	case $TYPE in
+		CTF-)
+			  URL="${URL}?game=Botpack.CTFGame"
+		;;
+		AS-)
+			  URL="${URL}?game=BotPack.Assault"
+		;;
+		DOM-)
+			  URL="${URL}?game=BotPack.Domination"
+		;;
+  	esac
+        LOGFILE="${UT_PREFS}/Logs/UnrealTournament.log"
+	echo "Run ./ut-bin $URL -log $LOGFILE\n"
+	exec "./ut-bin" $URL -log $LOGFILE
 fi
 echo "Couldn't run Unreal Tournament (ut-bin). Is UT_DATA_PATH set?"
 exit 1
